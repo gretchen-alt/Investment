@@ -1,0 +1,251 @@
+/* ============================================
+   Ancient Light, Modern Edge
+   Shared design system for the portfolio site
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap');
+
+:root {
+  /* soul palette */
+  --ivory: #F6F1E6;
+  --ivory-deep: #EFE7D6;
+  --camel: #C8A878;
+  --camel-soft: #DCC6A0;
+  --khaki: #B8AC8E;
+  --olive: #6B6B47;
+  --rust: #A8512E;
+  --rust-deep: #8A4124;
+  --terracotta: #C16A41;
+  --mauve: #9B7378;
+  --rose: #C98A8F;
+  --gold: #C9973A;
+  --warm-teal: #3D7A6E;
+  --navy: #2C3A4F;
+  --ink: #2A2520;
+  --ink-soft: #5C5448;
+
+  /* semantic */
+  --bg: var(--ivory);
+  --bg-raised: #FCFAF4;
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-soft);
+  --text-tertiary: var(--khaki);
+  --border-hairline: rgba(42, 37, 32, 0.12);
+  --border-soft: rgba(168, 81, 46, 0.22);
+  --accent: var(--rust);
+  --accent-soft: var(--terracotta);
+  --depth: var(--navy);
+  --depth-soft: var(--warm-teal);
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', -apple-system, 'Helvetica Neue', sans-serif;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--camel-soft); color: var(--ink); }
+
+a { color: var(--rust); text-decoration: none; }
+a:hover { color: var(--rust-deep); text-decoration: underline; }
+
+/* ---------- type scale ---------- */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: clamp(34px, 5vw, 54px); line-height: 1.08; }
+h2 { font-size: clamp(24px, 3.4vw, 32px); line-height: 1.15; }
+h3 { font-size: 20px; line-height: 1.3; }
+h4 { font-size: 16px; font-weight: 600; }
+
+.italic { font-style: italic; }
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+p { margin: 0 0 1rem; color: var(--text-secondary); }
+p:last-child { margin-bottom: 0; }
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.mono, .data {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- layout shell ---------- */
+.shell {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.shell-narrow {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ---------- top nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246, 241, 230, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-hairline);
+}
+.nav-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.nav-mark {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.nav-mark span { color: var(--accent); font-style: italic; }
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  display: block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: background 0.15s, color 0.15s;
+}
+.nav-links a:hover {
+  background: var(--ivory-deep);
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links a.active {
+  color: var(--accent);
+  background: rgba(168, 81, 46, 0.08);
+}
+.nav-toggle { display: none; }
+
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+}
+
+/* ---------- hero band (golden hour) ---------- */
+.hero {
+  background:
+    radial-gradient(ellipse at 20% -10%, rgba(201,151,58,0.16), transparent 55%),
+    radial-gradient(ellipse at 90% 0%, rgba(168,81,46,0.10), transparent 50%),
+    var(--ivory);
+  border-bottom: 1px solid var(--border-hairline);
+  padding: 64px 0 56px;
+}
+
+/* ---------- cards: collected & layered ---------- */
+.card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: 24px 26px;
+}
+.card + .card { margin-top: 16px; }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-hairline);
+  margin: 40px 0;
+}
+.divider-accent {
+  border: none;
+  border-top: 2px solid var(--accent);
+  width: 56px;
+  margin: 20px 0;
+}
+
+/* ---------- pills / status tags ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.tag-hold { background: rgba(61,122,110,0.10); color: var(--warm-teal); border-color: rgba(61,122,110,0.3); }
+.tag-watch { background: rgba(155,115,120,0.10); color: var(--mauve); border-color: rgba(155,115,120,0.3); }
+.tag-active { background: rgba(201,151,58,0.14); color: #8A6B1F; border-color: rgba(201,151,58,0.4); }
+.tag-trim { background: rgba(168,81,46,0.10); color: var(--rust-deep); border-color: rgba(168,81,46,0.32); }
+.tag-monitor { background: rgba(44,58,79,0.08); color: var(--navy); border-color: rgba(44,58,79,0.26); }
+
+/* ---------- footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--border-hairline);
+  padding: 32px 0 56px;
+  margin-top: 64px;
+}
+.site-footer p {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+/* ---------- utility ---------- */
+.flex { display: flex; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.gap-12 { gap: 12px; }
+.muted { color: var(--text-tertiary); }
+.accent-text { color: var(--accent); }
