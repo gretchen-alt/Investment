@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar — Ancient Light, Modern Edge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory:      #F5F0E8;
+    --ivory-deep: #EDE5D8;
+    --ivory-mid:  #F0EAE0;
+    --camel:      #4A3820;
+    --camel-lt:   #5C4830;
+    --rust:       #943D1E;
+    --rose:       #B06560;
+    --teal:       #3D6E6C;
+    --olive:      #4E5E30;
+    --gold:       #A87820;
+    --mauve:      #7E5E6A;
+    --navy:       #2C3E5A;
+    --text:       #2A2018;
+    --text-lt:    #4A3D34;
+    --border:     #DDD5C8;
+    --border-lt:  #EAE3D8;
+
+    /* event type colors — functionally distinct, warm but differentiated */
+    --ev-fill:    #2D6A4F;   /* forest green — position fills */
+    --ev-earn:    #1D4E89;   /* deep blue — earnings */
+    --ev-ltcg:    #B5830A;   /* amber — LTCG milestones */
+    --ev-review:  #6B3FA0;   /* purple — portfolio reviews */
+    --ev-tax:     #C0392B;   /* clear red — tax events */
+    --ev-travel:  #1A1A2E;   /* near-black navy — travel/deadlines */
+    --ev-btc:     #D4720A;   /* burnt orange — BTC cycle */
+    --ev-catalyst:#7B1450;   /* deep magenta — binary catalysts */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ivory);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--ivory);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--camel-lt);
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--rust); }
+  .nav-links a.active { color: var(--rust); }
+
+  /* ── AGATE DIVIDER ── */
+  .agate-divider {
+    width: 100%;
+    height: 48px;
+    display: block;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 72px 48px 56px;
+  }
+  .page-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .page-eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 40px;
+    background: var(--rust);
+    opacity: 0.4;
+  }
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 68px);
+    font-weight: 300;
+    line-height: 1.06;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .page-title em { font-style: italic; color: var(--rust); }
+  .page-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--camel-lt);
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-lt);
+  }
+  .legend-pip {
+    width: 16px;
+    height: 4px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── TIMELINE WRAPPER ── */
+  .timeline-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px 96px;
+  }
+
+  /* ── MONTH BLOCK ── */
+  .month-block {
+    margin-bottom: 8px;
+  }
+  .month-header {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    align-items: center;
+    padding: 20px 0 12px;
+    border-top: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .month-header:hover .month-name { color: var(--rust); }
+  .month-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--camel);
+    transition: color 0.2s;
+  }
+  .month-name.past { color: var(--camel-lt); }
+  .month-name.now  { color: var(--rust); font-weight: 500; }
+  .month-tag {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-lt);
+    font-style: italic;
+  }
+
+  /* ── EVENT ROW ── */
+  .events {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 8px;
+  }
+  .event {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 0 20px;
+    align-items: start;
+    padding: 14px 16px 14px 0;
+    border-bottom: 1px solid var(--border-lt);
+    border-left: 5px solid transparent;
+    padding-left: 16px;
+    background: transparent;
+    transition: background 0.15s;
+  }
+  .event:hover { background: var(--ivory-mid); }
+  .event:last-child { border-bottom: none; }
+
+  /* type-specific left bar colors */
+  .event.ev-fill     { border-left-color: var(--ev-fill); }
+  .event.ev-earn     { border-left-color: var(--ev-earn); }
+  .event.ev-ltcg     { border-left-color: var(--ev-ltcg); }
+  .event.ev-review   { border-left-color: var(--ev-review); }
+  .event.ev-tax      { border-left-color: var(--ev-tax); }
+  .event.ev-travel   { border-left-color: var(--ev-travel); }
+  .event.ev-btc      { border-left-color: var(--ev-btc); }
+  .event.ev-catalyst { border-left-color: var(--ev-catalyst); }
+
+  .event-date {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--camel);
+    padding-top: 2px;
+    white-space: nowrap;
+  }
+  .event-date.past { color: var(--camel-lt); }
+  .event-content { }
+  .event-title {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .event-title.past { color: var(--text-lt); }
+  .event-note {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--camel-lt);
+    line-height: 1.6;
+  }
+  .event-tag {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    align-self: start;
+    margin-top: 2px;
+  }
+
+  /* tag styles */
+  .tag-fill     { background: rgba(45,106,79,0.12);   color: var(--ev-fill);    }
+  .tag-earn     { background: rgba(29,78,137,0.12);   color: var(--ev-earn);    }
+  .tag-ltcg     { background: rgba(181,131,10,0.12);  color: var(--ev-ltcg);    }
+  .tag-review   { background: rgba(107,63,160,0.12);  color: var(--ev-review);  }
+  .tag-tax      { background: rgba(192,57,43,0.12);   color: var(--ev-tax);     }
+  .tag-travel   { background: rgba(26,26,46,0.10);    color: var(--ev-travel);  }
+  .tag-btc      { background: rgba(212,114,10,0.12);  color: var(--ev-btc);     }
+  .tag-catalyst { background: rgba(123,20,80,0.12);   color: var(--ev-catalyst);}
+
+  /* ── NOW MARKER ── */
+  .now-marker {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0 16px;
+    align-items: center;
+    padding: 14px 0;
+    margin: 4px 0;
+  }
+  .now-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .now-line {
+    height: 2px;
+    background: linear-gradient(90deg, var(--rust), transparent);
+    border-radius: 1px;
+  }
+
+  /* ── PAST SECTION LABEL ── */
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    padding: 32px 0 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 720px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 18px; }
+    .page-header, .legend, .timeline-wrap { padding-left: 24px; padding-right: 24px; }
+    .page-header { padding-top: 48px; }
+    .event { grid-template-columns: 80px 1fr; }
+    .event-tag { display: none; }
+    .month-header { grid-template-columns: 90px 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Ancient Light, Modern Edge</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Thesis</a></li>
+    <li><a href="calendar.html" class="active">Calendar</a></li>
+    <li><a href="simulator.html">Simulator</a></li>
+    <li><a href="status.html">Status</a></li>
+    <li><a href="for-the-kids.html">For the Kids</a></li>
+  </ul>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="page-eyebrow">Calendar · 2025–2026</div>
+  <div class="page-title">The road<br><em>marked.</em></div>
+  <p class="page-sub">Every decision behind us. Every milestone ahead. The journey recorded, not as performance — but as evidence of a thesis held through time.</p>
+</div>
+
+<!-- AGATE DIVIDER -->
+<svg class="agate-divider" viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="48" fill="#EDE5D8"/>
+  <path d="M0,6 C180,2 360,12 540,6 C720,0 900,10 1080,6 C1260,2 1380,10 1440,7 L1440,48 L0,48 Z" fill="#A87820" opacity="0.30"/>
+  <path d="M0,15 C200,9 420,21 640,14 C860,7 1080,19 1300,14 C1390,11 1430,16 1440,15 L1440,48 L0,48 Z" fill="#943D1E" opacity="0.24"/>
+  <path d="M0,24 C260,18 520,30 780,23 C1040,16 1200,28 1440,23 L1440,48 L0,48 Z" fill="#4E5E30" opacity="0.22"/>
+  <path d="M0,33 C300,28 600,39 900,33 C1100,28 1310,38 1440,33 L1440,48 L0,48 Z" fill="#3D6E6C" opacity="0.18"/>
+  <path d="M0,41 C400,37 800,46 1200,41 C1330,38 1420,43 1440,41 L1440,48 L0,48 Z" fill="#7E5E6A" opacity="0.16"/>
+  <path d="M0,46 C480,43 960,48 1440,44 L1440,48 L0,48 Z" fill="#B06560" opacity="0.14"/>
+</svg>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-pip" style="background:var(--ev-fill)"></div>Position fill</div>
+  <div class="legend-item"><div class="legend-pip" style="background:var(--ev-earn)"></div>Earnings</div>
+  <div class="legend-item"><div class="legend-pip" style="background:var(--ev-ltcg)"></div>LTCG eligible</div>
+  <div class="legend-item"><div class="legend-pip" style="background:var(--ev-review)"></div>Portfolio review</div>
+  <div class="legend-item"><div class="legend-pip" style="background:var(--ev-tax)"></div>Tax</div>
+  <div class="legend-item"><div class="legend-pip" style="background:var(--ev-travel)"></div>Travel / deadline</div>
+  <div class="legend-item"><div class="legend-pip" style="background:var(--ev-catalyst)"></div>Catalyst</div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-wrap">
+
+  <div class="section-label">Behind us · The road already traveled</div>
+
+  <!-- OCT 2025 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name past">Oct 2025</div>
+      <div class="month-tag">The cycle peak</div>
+    </div>
+    <div class="events">
+      <div class="event ev-btc">
+        <div class="event-date past">Oct 14</div>
+        <div class="event-content">
+          <div class="event-title past">BTC all-time high — $126,000</div>
+          <div class="event-note">The cycle peak. One year from this date, LTCG clock starts for any BTC sold from here. The tide was high.</div>
+        </div>
+        <div class="event-tag tag-btc">BTC Cycle</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAY 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name past">May 2026</div>
+      <div class="month-tag">Deploying into weakness</div>
+    </div>
+    <div class="events">
+      <div class="event ev-fill">
+        <div class="event-date past">May 18–27</div>
+        <div class="event-content">
+          <div class="event-title past">BTC — $2,500 @ $72,900</div>
+          <div class="event-note">DCA into a market pulling back from ATH. Conviction held.</div>
+        </div>
+        <div class="event-tag tag-fill">Fill</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name past">Jun 2026</div>
+      <div class="month-tag">Extreme fear — deploy</div>
+    </div>
+    <div class="events">
+      <div class="event ev-fill">
+        <div class="event-date past">Jun 8</div>
+        <div class="event-content">
+          <div class="event-title past">CRSP — 30sh @ $50.11 · Ladder R1</div>
+          <div class="event-note">Gene editing, first rung filled. Casgevy scaling. Science proven.</div>
+        </div>
+        <div class="event-tag tag-fill">Fill</div>
+      </div>
+      <div class="event ev-fill">
+        <div class="event-date past">Jun 8</div>
+        <div class="event-content">
+          <div class="event-title past">WMB — 14sh @ $71.45 · Ladder R1</div>
+          <div class="event-note">Pipeline tollbooth. Take-or-pay revenue. Physical World anchor.</div>
+        </div>
+        <div class="event-tag tag-fill">Fill</div>
+      </div>
+      <div class="event ev-fill">
+        <div class="event-date past">Jun 9</div>
+        <div class="event-content">
+          <div class="event-title past">BTC — 0.0406 @ $61,556</div>
+          <div class="event-note">Fear & Greed at 15 — extreme fear. The moment the thesis is tested is when you buy.</div>
+        </div>
+        <div class="event-tag tag-fill">Fill</div>
+      </div>
+      <div class="event ev-fill">
+        <div class="event-date past">Jun 17</div>
+        <div class="event-content">
+          <div class="event-title past">SOL — 43.73 @ $68.61 · New position</div>
+          <div class="event-note">Execution layer thesis. Speed, cost-efficiency, agentic AI infrastructure rail.</div>
+        </div>
+        <div class="event-tag tag-fill">Fill</div>
+      </div>
+      <div class="event ev-fill">
+        <div class="event-date past">Jun 17</div>
+        <div class="event-content">
+          <div class="event-title past">SUI — ~$1,000 @ $0.71 · Satellite</div>
+          <div class="event-note">Agentic solutions satellite. Under evaluation alongside SOL sizing.</div>
+        </div>
+        <div class="event-tag tag-fill">Fill</div>
+      </div>
+      <div class="event ev-tax">
+        <div class="event-date past">Jun 17</div>
+        <div class="event-content">
+          <div class="event-title past">HBAR sold · Crypto.com closed</div>
+          <div class="event-note">STCL –$6.06. Account closed. Custody consolidated. Running YTD harvest: ~–$2,220.</div>
+        </div>
+        <div class="event-tag tag-tax">Tax Harvest</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOW MARKER -->
+  <div class="now-marker">
+    <div class="now-label">Now · Jun 22</div>
+    <div class="now-line"></div>
+  </div>
+
+  <div class="section-label">Ahead · The road still to travel</div>
+
+  <!-- JUL 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name now">Jul 2026</div>
+      <div class="month-tag">Orders in before departure</div>
+    </div>
+    <div class="events">
+      <div class="event ev-travel">
+        <div class="event-date">Jul 15</div>
+        <div class="event-content">
+          <div class="event-title">Travel departure — hard deadline</div>
+          <div class="event-note">All limit orders must be placed before this date. BESI, ASTS, ONTO, DSCSY ladders set and waiting. Orders fill automatically during earnings season.</div>
+        </div>
+        <div class="event-tag tag-travel">Deadline</div>
+      </div>
+      <div class="event ev-earn">
+        <div class="event-date">Jul 23</div>
+        <div class="event-content">
+          <div class="event-title">BESI Q2 2026 earnings — Before Open</div>
+          <div class="event-note">Gate of hybrid bonding. Orders up 104% YoY. Q2 revenue guided +30–40% sequentially. Watch for order backlog and hybrid bonding unit data. Entry ladder set before Jul 15.</div>
+        </div>
+        <div class="event-tag tag-earn">Earnings</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUG 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name">Aug 2026</div>
+      <div class="month-tag">Q3 review window</div>
+    </div>
+    <div class="events">
+      <div class="event ev-review">
+        <div class="event-date">Aug 2026</div>
+        <div class="event-content">
+          <div class="event-title">Q3 Portfolio Review</div>
+          <div class="event-note">Thesis integrity check. Sleeve drift vs targets. Crypto sleeve — SOL/SUI conviction split decision. AI waves white space (Waves 4, 6, 7) reassessment. DSCSY ladder after Q2 earnings softness.</div>
+        </div>
+        <div class="event-tag tag-review">Review</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEP 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name">Sep 2026</div>
+      <div class="month-tag">LTCG clock — first positions</div>
+    </div>
+    <div class="events">
+      <div class="event ev-ltcg">
+        <div class="event-date">Sep 2026</div>
+        <div class="event-content">
+          <div class="event-title">Target: 90% committed</div>
+          <div class="event-note">Original deployment target date. Positions initiated June–September 2026 become LTCG eligible June–September 2027. No rush — the thesis doesn't expire.</div>
+        </div>
+        <div class="event-tag tag-ltcg">LTCG Target</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OCT 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name">Oct 2026</div>
+      <div class="month-tag">One year from the ATH</div>
+    </div>
+    <div class="events">
+      <div class="event ev-btc">
+        <div class="event-date">Oct 14</div>
+        <div class="event-content">
+          <div class="event-title">One year from BTC ATH — $126,000</div>
+          <div class="event-note">One full year since the cycle peak. How does the thesis look from here? Not a sell signal — a moment to read the tide.</div>
+        </div>
+        <div class="event-tag tag-btc">BTC Cycle</div>
+      </div>
+
+      <div class="event ev-review">
+        <div class="event-date">Oct 2026</div>
+        <div class="event-content">
+          <div class="event-title">Q4 Portfolio Review</div>
+          <div class="event-note">Full rebalance to target weights. Tax loss harvest candidates. CPA coordination. Children's accounts — evaluate whether main restructure is complete enough to begin.</div>
+        </div>
+        <div class="event-tag tag-review">Review</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOV 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name">Nov 2026</div>
+      <div class="month-tag">Catalyst watch</div>
+    </div>
+    <div class="events">
+      <div class="event ev-catalyst">
+        <div class="event-date">Nov 2026</div>
+        <div class="event-content">
+          <div class="event-title">CMPS — NDA filing targeted</div>
+          <div class="event-note">Compass Pathways psilocybin NDA for TRD. If filed, positions for 2027 FDA approval catalyst. Watch for announcement — re-rating event.</div>
+        </div>
+        <div class="event-tag tag-catalyst">Catalyst</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DEC 2026 -->
+  <div class="month-block">
+    <div class="month-header">
+      <div class="month-name">Dec 2026</div>
+      <div class="month-tag">Year-end</div>
+    </div>
+    <div class="events">
+      <div class="event ev-tax">
+        <div class="event-date">Dec 2026</div>
+        <div class="event-content">
+          <div class="event-title">Year-end tax loss harvest window</div>
+          <div class="event-note">Identify any remaining STCL candidates before Dec 31. Coordinate with CPA on crypto records. Running YTD harvest ~–$2,220 — assess offset against any realized gains.</div>
+        </div>
+        <div class="event-tag tag-tax">Tax</div>
+      </div>
+      <div class="event ev-review">
+        <div class="event-date">Dec 31</div>
+        <div class="event-content">
+          <div class="event-title">Year close · CPA handoff prep</div>
+          <div class="event-note">All crypto transactions logged. Workbook 6-sleeve restructure complete. CPA format confirmed. Quantinuum reassessment on calendar for Q4 2027.</div>
+        </div>
+        <div class="event-tag tag-review">Year Close</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

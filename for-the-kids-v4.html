@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For the Kids — Ancient Light, Modern Edge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory:     #F5F0E8;
+    --ivory-deep:#EDE5D8;
+    --camel:     #4A3820;
+    --camel-lt:  #5C4830;
+    --rust:      #943D1E;
+    --rose:      #B06560;
+    --teal:      #3D6E6C;
+    --olive:     #4E5E30;
+    --gold:      #A87820;
+    --mauve:     #7E5E6A;
+    --navy:      #2C3E5A;
+    --text:      #2A2018;
+    --text-lt:   #4A3D34;
+    --border:    #DDD5C8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ivory);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--ivory);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--camel);
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--rust); }
+
+  /* ── AGATE DIVIDER ── */
+  .agate-divider {
+    width: 100%;
+    height: 48px;
+    display: block;
+    margin: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 80px 48px 56px;
+  }
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 48px;
+    background: var(--rust);
+    opacity: 0.4;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 68px);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+  .hero-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--camel-lt);
+    letter-spacing: 0.06em;
+    margin-bottom: 52px;
+  }
+
+  /* ── LETTER ── */
+  .letter {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 48px 64px;
+  }
+  .letter-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text);
+    font-style: italic;
+  }
+  .letter-body p + p { margin-top: 1.4em; }
+  .letter-body strong {
+    font-weight: 500;
+    font-style: normal;
+    color: var(--rust);
+  }
+  .letter-sig {
+    margin-top: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--camel);
+    font-style: normal;
+  }
+  .letter-sig span {
+    display: block;
+    font-size: 16px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--camel-lt);
+    margin-top: 4px;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section-wrap {
+    background: var(--ivory-deep);
+    padding: 64px 0;
+  }
+  .section-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    margin-bottom: 32px;
+  }
+
+  /* ── SLEEVE CARDS ── */
+  .sleeve-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .sleeve-card {
+    background: var(--ivory);
+    border-left: 6px solid var(--border);
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+  .sleeve-card:hover { border-left-color: var(--rust); }
+  .sleeve-card.crypto   { border-left-color: var(--gold); }
+  .sleeve-card.psych    { border-left-color: var(--rose); }
+  .sleeve-card.genomics { border-left-color: var(--rose); }
+  .sleeve-card.physical { border-left-color: var(--olive); }
+  .sleeve-card.disrupt  { border-left-color: var(--teal); }
+
+  .sleeve-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .sleeve-vehicle {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    margin-bottom: 10px;
+  }
+  .sleeve-note {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-lt);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+  .sleeve-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .sleeve-pct {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--camel);
+  }
+  .sleeve-amt {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--camel-lt);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── TOTAL BAR ── */
+  .total-bar {
+    margin-top: 24px;
+    padding: 18px 28px;
+    background: var(--ivory);
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .total-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+  }
+  .total-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  /* ── RULES SECTION ── */
+  .rules-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 64px 48px 80px;
+  }
+  .rules-header {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .rules-header em { font-style: italic; color: var(--rust); }
+  .rules-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--camel-lt);
+    margin-bottom: 40px;
+  }
+  .rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .rule {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .rule-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--border);
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .rule-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .rule-body {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-lt);
+    line-height: 1.7;
+  }
+
+  /* ── CLOSING STONE ── */
+  .closing {
+    border-top: 1px solid var(--border);
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .stone-mark {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .closing-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--camel);
+    line-height: 1.6;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    .hero, .letter, .section-inner, .rules-wrap, .closing { padding-left: 24px; padding-right: 24px; }
+    .hero { padding-top: 48px; }
+    .sleeve-card { grid-template-columns: 1fr; }
+    .sleeve-right { text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Ancient Light, Modern Edge</div>
+  <ul class="nav-links">
+    <li><a href="thesis.html">Thesis</a></li>
+    <li><a href="calendar.html">Calendar</a></li>
+    <li><a href="simulator.html">Simulator</a></li>
+    <li><a href="status.html">Status</a></li>
+    <li><a href="for-the-kids.html" class="active">For the Kids</a></li>
+  </ul>
+</nav>
+
+<!-- AGATE DIVIDER — the signature element -->
+<svg class="agate-divider" viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="48" fill="#EDE5D8"/>
+  <path d="M0,6 C180,2 360,12 540,6 C720,0 900,10 1080,6 C1260,2 1380,10 1440,7 L1440,48 L0,48 Z" fill="#C9973A" opacity="0.35"/>
+  <path d="M0,14 C200,8 400,20 600,13 C800,6 1000,18 1200,13 C1320,10 1400,16 1440,14 L1440,48 L0,48 Z" fill="#943D1E" opacity="0.28"/>
+  <path d="M0,22 C150,16 320,28 500,21 C680,14 860,26 1040,21 C1220,16 1360,24 1440,21 L1440,48 L0,48 Z" fill="#B06560" opacity="0.32"/>
+  <path d="M0,30 C220,24 440,36 660,29 C880,22 1100,34 1320,29 C1380,27 1420,31 1440,30 L1440,48 L0,48 Z" fill="#3D6E6C" opacity="0.22"/>
+  <path d="M0,38 C300,33 600,42 900,37 C1100,33 1300,40 1440,37 L1440,48 L0,48 Z" fill="#4E5E30" opacity="0.18"/>
+  <path d="M0,44 C360,41 720,47 1080,43 C1260,41 1380,45 1440,44 L1440,48 L0,48 Z" fill="#A87820" opacity="0.20"/>
+</svg>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">For the Kids</div>
+  <h1>Built for you.<br><em>Before you knew</em><br>you needed it.</h1>
+  <p class="hero-sub">A high-conviction portfolio · ~$2,000 each · Five sleeves · Long horizon</p>
+</div>
+
+<!-- LETTER -->
+<div class="letter">
+  <div class="letter-body">
+    <p>This was built quietly, while you were becoming — <strong>a considered point of view</strong> held in five positions, compounding through whatever the world was doing.</p>
+    <p>Every sleeve has a thesis: not a price target, not a trend, but a belief about where the world is going and what will matter when it gets there — the medicine that rewires the mind, the metal that outlasts the currency, the satellite that reaches the unreachable, the gene that corrects what was always broken.</p>
+    <p>When you're ready to make it yours, the thesis will either still hold or it won't — and <strong>you will know the difference</strong>, because you'll have learned to read the tide, not the waves.</p>
+  </div>
+  <div class="letter-sig">
+    Mom
+    <span>Wisconsin · June 2026</span>
+  </div>
+</div>
+
+<!-- AGATE DIVIDER -->
+<svg class="agate-divider" viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="48" fill="#F5F0E8"/>
+  <path d="M0,5 C240,1 480,11 720,5 C960,0 1200,9 1440,5 L1440,48 L0,48 Z" fill="#4E5E30" opacity="0.30"/>
+  <path d="M0,13 C180,8 400,19 620,12 C840,5 1060,17 1280,12 C1360,10 1420,14 1440,13 L1440,48 L0,48 Z" fill="#3D6E6C" opacity="0.28"/>
+  <path d="M0,22 C280,16 560,28 840,21 C1020,16 1220,26 1440,21 L1440,48 L0,48 Z" fill="#A87820" opacity="0.24"/>
+  <path d="M0,31 C200,26 440,37 680,30 C920,23 1160,35 1380,30 C1420,29 1440,31 1440,31 L1440,48 L0,48 Z" fill="#943D1E" opacity="0.20"/>
+  <path d="M0,39 C360,35 720,44 1080,39 C1260,36 1380,41 1440,39 L1440,48 L0,48 Z" fill="#B06560" opacity="0.18"/>
+  <path d="M0,45 C480,42 960,48 1440,44 L1440,48 L0,48 Z" fill="#C9973A" opacity="0.22"/>
+</svg>
+
+<!-- SLEEVES -->
+<div class="section-wrap">
+  <div class="section-inner">
+    <div class="section-label">The Five Sleeves · What you own and why</div>
+    <div class="sleeve-grid">
+
+      <div class="sleeve-card crypto">
+        <div>
+          <div class="sleeve-name">Crypto</div>
+          <div class="sleeve-vehicle">IBIT · iShares Bitcoin Trust</div>
+          <div class="sleeve-note">Bitcoin is not a trade — it's a structural conviction that digital scarcity holds value in a world that keeps printing everything else. IBIT holds actual bitcoin, cleanly, with no wallet to manage.</div>
+        </div>
+        <div class="sleeve-right">
+          <div class="sleeve-pct">30%</div>
+          <div class="sleeve-amt">~$600</div>
+        </div>
+      </div>
+
+      <div class="sleeve-card psych">
+        <div>
+          <div class="sleeve-name">Healthcare — Psychedelics</div>
+          <div class="sleeve-vehicle">PSIL · AdvisorShares Psychedelics ETF</div>
+          <div class="sleeve-note">Psilocybin and related compounds are proving in clinical trials what shamans knew for centuries — the mind can be rewired. PSIL holds the companies leading that work toward FDA approval.</div>
+        </div>
+        <div class="sleeve-right">
+          <div class="sleeve-pct">15%</div>
+          <div class="sleeve-amt">~$300</div>
+        </div>
+      </div>
+
+      <div class="sleeve-card genomics">
+        <div>
+          <div class="sleeve-name">Healthcare — Genomics</div>
+          <div class="sleeve-vehicle">ARKG · ARK Genomic Revolution ETF</div>
+          <div class="sleeve-note">CRISPR has its first approved drug. The science is proven — now it's scaling. ARKG holds the companies that may cure diseases no one has ever cured before.</div>
+        </div>
+        <div class="sleeve-right">
+          <div class="sleeve-pct">15%</div>
+          <div class="sleeve-amt">~$300</div>
+        </div>
+      </div>
+
+      <div class="sleeve-card physical">
+        <div>
+          <div class="sleeve-name">Physical World</div>
+          <div class="sleeve-vehicle">FNV · Franco-Nevada &amp; WPM · Wheaton Precious Metals</div>
+          <div class="sleeve-note">Gold and silver royalty companies — they fund mines and collect forever, with no operating risk and no debt. The tollbooth model. These are the anchors that hold when everything else moves.</div>
+        </div>
+        <div class="sleeve-right">
+          <div class="sleeve-pct">25%</div>
+          <div class="sleeve-amt">~$500</div>
+        </div>
+      </div>
+
+      <div class="sleeve-card disrupt">
+        <div>
+          <div class="sleeve-name">Disruptive Technology</div>
+          <div class="sleeve-vehicle">IONQ · IonQ &amp; ASTS · AST SpaceMobile</div>
+          <div class="sleeve-note">A quantum computer and a satellite internet network — two technologies that don't exist at full scale yet, held now, before the world catches on. Long horizon. Hold through the noise.</div>
+        </div>
+        <div class="sleeve-right">
+          <div class="sleeve-pct">15%</div>
+          <div class="sleeve-amt">~$300</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="total-bar">
+      <div class="total-label">Total · Per Account</div>
+      <div class="total-val">~$2,000</div>
+    </div>
+  </div>
+</div>
+
+<!-- AGATE DIVIDER -->
+<svg class="agate-divider" viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="48" fill="#EDE5D8"/>
+  <path d="M0,6 C160,2 340,13 520,6 C700,0 880,11 1060,6 C1240,1 1360,9 1440,6 L1440,48 L0,48 Z" fill="#B06560" opacity="0.32"/>
+  <path d="M0,15 C200,10 420,21 640,14 C860,7 1080,19 1300,14 C1380,12 1430,16 1440,15 L1440,48 L0,48 Z" fill="#7E5E6A" opacity="0.26"/>
+  <path d="M0,24 C260,18 520,30 780,23 C1040,16 1200,28 1440,23 L1440,48 L0,48 Z" fill="#C9973A" opacity="0.24"/>
+  <path d="M0,33 C300,28 600,39 900,33 C1100,28 1300,37 1440,33 L1440,48 L0,48 Z" fill="#3D6E6C" opacity="0.20"/>
+  <path d="M0,41 C400,37 800,46 1200,41 C1320,39 1400,43 1440,41 L1440,48 L0,48 Z" fill="#4E5E30" opacity="0.16"/>
+  <path d="M0,46 C480,43 960,48 1440,45 L1440,48 L0,48 Z" fill="#943D1E" opacity="0.18"/>
+</svg>
+
+<!-- THREE RULES -->
+<div class="rules-wrap">
+  <div class="rules-header">Three things to <em>hold onto.</em></div>
+  <p class="rules-sub">Everything else is noise.</p>
+
+  <div class="rules-list">
+
+    <div class="rule">
+      <div class="rule-num">1</div>
+      <div>
+        <div class="rule-title">Hold for at least twelve months.</div>
+        <div class="rule-body">A year forces you to watch something move, breathe, and prove itself — and the tax treatment is better. Don't sell because something goes down. That's when the thesis is tested, not when it's broken.</div>
+      </div>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">2</div>
+      <div>
+        <div class="rule-title">Know what you own before you change anything.</div>
+        <div class="rule-body">Each position has a reason. Before you act — know what the original conviction was. If the thesis still holds, hold. Price movement alone is never a reason to do anything.</div>
+      </div>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">3</div>
+      <div>
+        <div class="rule-title">Read the tide, not the waves.</div>
+        <div class="rule-body">These positions will move dramatically. That's not the story. The story is whether the underlying thesis is still intact — if it is, the waves don't matter.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="stone-mark">🪨</div>
+  <div class="closing-text">
+    "The past is not baggage to be overcome nor souvenirs to collect —
+    but rather foundational moments and bits of wisdom
+    that make me who I am today."
+    <br><br>
+    This portfolio is one of those foundations. It's already working.
+  </div>
+</div>
+
+</body>
+</html>
