@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thesis — Ancient Light, Modern Edge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory:      #F5F0E8;
+    --ivory-deep: #EDE5D8;
+    --camel:      #4A3820;
+    --camel-lt:   #5C4830;
+    --rust:       #943D1E;
+    --rose:       #B06560;
+    --teal:       #3D6E6C;
+    --olive:      #4E5E30;
+    --gold:       #A87820;
+    --mauve:      #7E5E6A;
+    --navy:       #2C3E5A;
+    --text:       #2A2018;
+    --text-lt:    #4A3D34;
+    --border:     #DDD5C8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ivory);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--ivory);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--camel-lt);
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--rust); }
+  .nav-links a.active { color: var(--rust); }
+
+  /* ── AGATE DIVIDER ── */
+  .agate-divider {
+    width: 100%;
+    height: 48px;
+    display: block;
+  }
+
+  /* ── DECLARATION ── */
+  .declaration-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 96px 48px 80px;
+  }
+  .declaration-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .declaration-eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 48px;
+    background: var(--rust);
+    opacity: 0.4;
+  }
+  .declaration {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 7.5vw, 96px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .declaration em {
+    font-style: italic;
+    color: var(--rust);
+  }
+  .declaration .break { display: block; }
+
+  .declaration-sub {
+    margin-top: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(21px, 2.5vw, 28px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--camel-lt);
+    max-width: 660px;
+    border-left: 3px solid var(--border);
+    padding-left: 24px;
+  }
+
+  /* ── CONVICTION SECTION ── */
+  .convictions-wrap {
+    background: var(--ivory-deep);
+    padding: 72px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  /* subtle agate watermark behind convictions */
+  .convictions-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 50%, rgba(168,120,32,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 80% 30%, rgba(61,110,108,0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 70% 50% at 50% 80%, rgba(176,101,96,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .convictions-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px;
+    position: relative;
+  }
+  .convictions-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    margin-bottom: 48px;
+  }
+  .convictions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .conviction {
+    background: var(--ivory);
+    padding: 36px 32px 40px;
+    border-top: 4px solid var(--border);
+    transition: border-color 0.2s;
+  }
+  .conviction:hover { border-top-color: var(--rust); }
+  .conviction.world    { border-top-color: var(--teal); }
+  .conviction.medicine { border-top-color: var(--rose); }
+  .conviction.wealth   { border-top-color: var(--gold); }
+
+  .conviction-icon {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .conviction-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .conviction-title em {
+    font-style: italic;
+    color: var(--rust);
+  }
+  .conviction-body {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-lt);
+    line-height: 1.75;
+  }
+
+  /* ── SLEEVE BAND ── */
+  .sleeve-band-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 72px 48px 64px;
+  }
+  .sleeve-band-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    margin-bottom: 36px;
+  }
+  .sleeve-band {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .sleeve-row {
+    display: grid;
+    grid-template-columns: 6px 1fr auto;
+    align-items: center;
+    background: var(--ivory-deep);
+    gap: 0;
+    transition: background 0.15s;
+  }
+  .sleeve-row:hover { background: var(--border); }
+  .sleeve-pip { height: 100%; min-height: 52px; }
+  .sleeve-pip.crypto   { background: var(--gold); }
+  .sleeve-pip.psych    { background: var(--rose); }
+  .sleeve-pip.genomics { background: var(--rose); opacity: 0.65; }
+  .sleeve-pip.physical { background: var(--olive); }
+  .sleeve-pip.defense  { background: var(--navy); }
+  .sleeve-pip.disrupt  { background: var(--teal); }
+
+  .sleeve-row-content {
+    padding: 14px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .sleeve-row-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .sleeve-row-note {
+    font-family: 'Jost', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-lt);
+    line-height: 1.5;
+  }
+  .sleeve-row-pct {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--camel-lt);
+    padding-right: 28px;
+    white-space: nowrap;
+  }
+
+  /* ── LEGACY CLOSE ── */
+  .legacy-wrap {
+    background: var(--ivory-deep);
+    padding: 80px 0 96px;
+  }
+  .legacy-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+  .legacy-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.2vw, 52px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--text);
+    max-width: 720px;
+    margin-bottom: 40px;
+  }
+  .legacy-statement em {
+    font-style: normal;
+    color: var(--rust);
+  }
+  .legacy-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .legacy-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--camel);
+  }
+  .legacy-date {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--camel-lt);
+  }
+  .legacy-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+  }
+  .legacy-principle {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+  }
+  .principle-item {
+    font-family: 'Jost', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-lt);
+    line-height: 1.7;
+  }
+  .principle-item strong {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--camel-lt);
+    margin-bottom: 8px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 720px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 18px; }
+    .declaration-wrap, .convictions-inner,
+    .sleeve-band-wrap, .legacy-inner { padding-left: 24px; padding-right: 24px; }
+    .declaration-wrap { padding-top: 56px; padding-bottom: 48px; }
+    .convictions-grid { grid-template-columns: 1fr; }
+    .legacy-principle { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Ancient Light, Modern Edge</div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Thesis</a></li>
+    <li><a href="calendar.html">Calendar</a></li>
+    <li><a href="simulator.html">Simulator</a></li>
+    <li><a href="status.html">Status</a></li>
+    <li><a href="for-the-kids.html">For the Kids</a></li>
+  </ul>
+</nav>
+
+<!-- DECLARATION -->
+<div class="declaration-wrap">
+  <div class="declaration-eyebrow">Thesis · Ancient Light, Modern Edge</div>
+  <div class="declaration">
+    <span class="break">I invest in</span>
+    <span class="break">the world I want</span>
+    <span class="break"><em>to see.</em></span>
+  </div>
+  <div class="declaration-sub">
+    Not a portfolio built to beat a benchmark — a considered point of view on where the world is going, held patiently, through every wave, toward a tide that rises for everyone.
+  </div>
+</div>
+
+<!-- AGATE DIVIDER -->
+<svg class="agate-divider" viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="48" fill="#EDE5D8"/>
+  <path d="M0,6 C180,2 360,12 540,6 C720,0 900,10 1080,6 C1260,2 1380,10 1440,7 L1440,48 L0,48 Z" fill="#A87820" opacity="0.32"/>
+  <path d="M0,14 C200,8 420,20 640,13 C860,6 1080,18 1300,13 C1380,11 1430,15 1440,14 L1440,48 L0,48 Z" fill="#943D1E" opacity="0.26"/>
+  <path d="M0,23 C260,17 520,29 780,22 C1040,15 1200,27 1440,22 L1440,48 L0,48 Z" fill="#B06560" opacity="0.28"/>
+  <path d="M0,32 C300,27 600,38 900,32 C1100,27 1300,36 1440,32 L1440,48 L0,48 Z" fill="#3D6E6C" opacity="0.20"/>
+  <path d="M0,40 C400,36 800,45 1200,40 C1320,37 1400,42 1440,40 L1440,48 L0,48 Z" fill="#4E5E30" opacity="0.16"/>
+  <path d="M0,45 C480,42 960,48 1440,44 L1440,48 L0,48 Z" fill="#7E5E6A" opacity="0.18"/>
+</svg>
+
+<!-- CONVICTIONS -->
+<div class="convictions-wrap">
+  <div class="convictions-inner">
+    <div class="convictions-label">Three convictions · The ground this stands on</div>
+    <div class="convictions-grid">
+
+      <div class="conviction world">
+        <span class="conviction-icon">🌊</span>
+        <div class="conviction-title">The tide is <em>rising.</em></div>
+        <div class="conviction-body">Not every wave can be caught — but the tide itself is directional. Gene editing, quantum computing, clean energy infrastructure, satellite connectivity — these aren't trends. They're the shape of what's coming, and capital placed early compounds through the noise.</div>
+      </div>
+
+      <div class="conviction medicine">
+        <span class="conviction-icon">🌿</span>
+        <div class="conviction-title">Healing is <em>the work.</em></div>
+        <div class="conviction-body">The most important technologies of this century will touch the human body and mind — rewiring what was broken, extending what was finite, dissolving what was immovable. Investing here is not speculation. It is a vote for what medicine becomes.</div>
+      </div>
+
+      <div class="conviction wealth">
+        <span class="conviction-icon">✦</span>
+        <div class="conviction-title">Legacy outlasts <em>the ledger.</em></div>
+        <div class="conviction-body">This is not built for a quarter or a cycle. It is built for a decade, for children who will inherit a world shaped in part by where capital flows today. Every position is a choice about that world — held with patience, revised with discipline, never abandoned to fear.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- AGATE DIVIDER -->
+<svg class="agate-divider" viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="48" fill="#F5F0E8"/>
+  <path d="M0,5 C240,1 480,11 720,5 C960,0 1200,9 1440,5 L1440,48 L0,48 Z" fill="#4E5E30" opacity="0.28"/>
+  <path d="M0,14 C180,9 400,20 620,13 C840,6 1060,17 1280,12 C1380,10 1430,14 1440,13 L1440,48 L0,48 Z" fill="#3D6E6C" opacity="0.24"/>
+  <path d="M0,23 C280,17 560,29 840,22 C1020,16 1220,27 1440,22 L1440,48 L0,48 Z" fill="#A87820" opacity="0.22"/>
+  <path d="M0,32 C200,27 440,38 680,31 C920,24 1160,36 1380,31 C1420,30 1440,32 1440,32 L1440,48 L0,48 Z" fill="#943D1E" opacity="0.18"/>
+  <path d="M0,40 C360,36 720,45 1080,40 C1260,37 1390,42 1440,40 L1440,48 L0,48 Z" fill="#B06560" opacity="0.16"/>
+  <path d="M0,46 C480,43 960,48 1440,45 L1440,48 L0,48 Z" fill="#A87820" opacity="0.20"/>
+</svg>
+
+<!-- SLEEVE BAND -->
+<div class="sleeve-band-wrap">
+  <div class="sleeve-band-label">Six sleeves · Where the conviction lives</div>
+  <div class="sleeve-band">
+
+    <div class="sleeve-row">
+      <div class="sleeve-pip crypto"></div>
+      <div class="sleeve-row-content">
+        <div class="sleeve-row-name">Crypto</div>
+        <div class="sleeve-row-note">Digital scarcity in a world of infinite printing. BTC, ETH, SOL — three distinct roles, not interchangeable.</div>
+      </div>
+      <div class="sleeve-row-pct">30%</div>
+    </div>
+
+    <div class="sleeve-row">
+      <div class="sleeve-pip psych"></div>
+      <div class="sleeve-row-content">
+        <div class="sleeve-row-name">Healthcare</div>
+        <div class="sleeve-row-note">Gene editing, psychedelic medicine, AI drug discovery — the century's most important science, held early.</div>
+      </div>
+      <div class="sleeve-row-pct">20%</div>
+    </div>
+
+    <div class="sleeve-row">
+      <div class="sleeve-pip physical"></div>
+      <div class="sleeve-row-content">
+        <div class="sleeve-row-name">Physical World</div>
+        <div class="sleeve-row-note">Gold and silver royalty, nuclear, natural gas infrastructure, critical minerals. What the world runs through.</div>
+      </div>
+      <div class="sleeve-row-pct">20%</div>
+    </div>
+
+    <div class="sleeve-row">
+      <div class="sleeve-pip disrupt"></div>
+      <div class="sleeve-row-content">
+        <div class="sleeve-row-name">Disruptive Technology</div>
+        <div class="sleeve-row-note">Memory stack, quantum computing, satellite connectivity, Japan semiconductor infrastructure. The next wave.</div>
+      </div>
+      <div class="sleeve-row-pct">15%</div>
+    </div>
+
+    <div class="sleeve-row">
+      <div class="sleeve-pip defense"></div>
+      <div class="sleeve-row-content">
+        <div class="sleeve-row-name">European Defense</div>
+        <div class="sleeve-row-note">A generational rearmament cycle, structural and underway. European companies only — an ethical boundary held.</div>
+      </div>
+      <div class="sleeve-row-pct">10%</div>
+    </div>
+
+    <div class="sleeve-row">
+      <div class="sleeve-pip genomics"></div>
+      <div class="sleeve-row-content">
+        <div class="sleeve-row-name">Dry Powder</div>
+        <div class="sleeve-row-note">Patient capital waiting for the moment the tide pulls back. Opportunity needs a place to land.</div>
+      </div>
+      <div class="sleeve-row-pct">5%</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- AGATE DIVIDER -->
+<svg class="agate-divider" viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="48" fill="#EDE5D8"/>
+  <path d="M0,6 C160,2 340,13 520,6 C700,0 880,11 1060,6 C1240,1 1370,9 1440,6 L1440,48 L0,48 Z" fill="#B06560" opacity="0.30"/>
+  <path d="M0,16 C200,10 420,22 640,15 C860,8 1080,20 1300,15 C1390,12 1430,17 1440,16 L1440,48 L0,48 Z" fill="#7E5E6A" opacity="0.24"/>
+  <path d="M0,26 C260,20 520,32 780,25 C1040,18 1200,30 1440,25 L1440,48 L0,48 Z" fill="#A87820" opacity="0.22"/>
+  <path d="M0,35 C300,30 600,41 900,35 C1100,30 1310,39 1440,35 L1440,48 L0,48 Z" fill="#3D6E6C" opacity="0.18"/>
+  <path d="M0,42 C400,38 800,47 1200,42 C1330,39 1410,44 1440,42 L1440,48 L0,48 Z" fill="#943D1E" opacity="0.16"/>
+  <path d="M0,46 C480,44 960,48 1440,45 L1440,48 L0,48 Z" fill="#4E5E30" opacity="0.14"/>
+</svg>
+
+<!-- LEGACY CLOSE -->
+<div class="legacy-wrap">
+  <div class="legacy-inner">
+    <div class="legacy-statement">
+      "The legacy is beyond me —<br>
+      it is for a <em>brighter future</em><br>
+      for everyone."
+    </div>
+    <div class="legacy-meta">
+      <div class="legacy-name">Gretchen</div>
+      <div class="legacy-divider"></div>
+      <div class="legacy-date">Wisconsin · June 2026</div>
+    </div>
+
+    <div class="legacy-principle">
+      <div class="principle-item">
+        <strong>The discipline</strong>
+        Twelve-month minimum hold. Laddered entries, never chasing momentum. Rules-based rotation — not fear, not greed.
+      </div>
+      <div class="principle-item">
+        <strong>The filter</strong>
+        No US defense contractors. No oil. No tobacco. Capital flows where conviction lives — and conviction has a conscience.
+      </div>
+      <div class="principle-item">
+        <strong>The horizon</strong>
+        Ten years. $120,000 deployed with intention. Not a trade. A thesis about what the world is becoming — and a decision to be part of building it.
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
